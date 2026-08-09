@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mathematiclove.github.io/sitemap.xml
 Sitemap: https://mathematiclove.github.io/my-cv/sitemap.xml
