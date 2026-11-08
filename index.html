@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Redirecting to portfolio…</title>
   <link rel="canonical" href="https://mathematiclove.github.io/my-cv/">
-  <meta http-equiv="refresh" content="0; url=https://mathematiclove.github.io/my-cv/">
+  <noscript><meta http-equiv="refresh" content="0; url=https://mathematiclove.github.io/my-cv/"></noscript>
   <!-- Yandex Webmaster verification -->
   <meta name="yandex-verification" content="518a9f955653cf26" />
   <style>
@@ -23,12 +23,29 @@
     // sendBeacon survives the navigation, so the hit isn't lost.
     (function () {
       var url = "https://countapi.mileshilliard.com/api/v1/hit/mathematiclove-root-views";
-      try {
-        if (!(navigator.sendBeacon && navigator.sendBeacon(url))) {
-          fetch(url, { mode: "no-cors", keepalive: true }).catch(function () {});
+      // Skip search engines, link-preview bots and headless/automated browsers.
+      var isBot = navigator.webdriver ||
+        /bot|crawl|spider|slurp|yandex|google|bing|duckduck|baidu|preview|headless|lighthouse|facebookexternalhit|telegram|whatsapp/i
+          .test(navigator.userAgent);
+
+      function go() {
+        if (!isBot) {
+          try {
+            if (!(navigator.sendBeacon && navigator.sendBeacon(url))) {
+              fetch(url, { mode: "no-cors", keepalive: true }).catch(function () {});
+            }
+          } catch (e) {}
         }
-      } catch (e) {}
-      location.replace("https://mathematiclove.github.io/my-cv/");
+        location.replace("https://mathematiclove.github.io/my-cv/");
+      }
+
+      // Chrome may prerender the page while the address is being typed;
+      // count only once the visitor actually opens it.
+      if (document.prerendering) {
+        document.addEventListener("prerenderingchange", go, { once: true });
+      } else {
+        go();
+      }
     })();
   </script>
 </head>
