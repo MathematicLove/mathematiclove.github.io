@@ -23,6 +23,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Build downloads manifest
+        run: python3 .github/scripts/build_downloads_manifest.py
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

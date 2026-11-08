@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /downloads
 
 Sitemap: https://mathematiclove.github.io/my-cv/sitemap.xml
