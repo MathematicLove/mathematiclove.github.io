@@ -18,7 +18,19 @@
     }
     @media (prefers-color-scheme: dark) { body { color: #9198a1; background: #0d1117; } }
   </style>
-  <script>location.replace("https://mathematiclove.github.io/my-cv/");</script>
+  <script>
+    // Count root visits (shown on my-cv/stats), then redirect.
+    // sendBeacon survives the navigation, so the hit isn't lost.
+    (function () {
+      var url = "https://countapi.mileshilliard.com/api/v1/hit/mathematiclove-root-views";
+      try {
+        if (!(navigator.sendBeacon && navigator.sendBeacon(url))) {
+          fetch(url, { mode: "no-cors", keepalive: true }).catch(function () {});
+        }
+      } catch (e) {}
+      location.replace("https://mathematiclove.github.io/my-cv/");
+    })();
+  </script>
 </head>
 <body>
   <p>Redirecting to portfolio…</p>
